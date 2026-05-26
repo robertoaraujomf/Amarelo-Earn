@@ -19,7 +19,7 @@ def fetch_all_results() -> List[Dict]:
 def extract_draws(data: List[Dict]) -> List[List[int]]:
     draws = []
     for contest in data:
-        dezenas = contest.get("dezenas")
+        dezenas = contest.get("dezenasOrdemSorteio") or contest.get("dezenas")
         if dezenas and isinstance(dezenas, list):
             draw = [int(d) for d in dezenas if d]
             if len(draw) == 6:
