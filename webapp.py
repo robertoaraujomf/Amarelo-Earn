@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from app_earn.scraper import fetch_all_results, extract_draws, split_by_position
-from app_earn.analyzer import compute_position_frequencies, get_top_n
+from app_earn.analyzer import compute_position_frequencies
 from app_earn.generator import generate_games
 
 app = Flask(__name__)
@@ -20,10 +20,18 @@ def load_data():
     pos_freq = compute_position_frequencies(positions)
     games = generate_games(pos_freq)
 
-    pos_top5 = []
+    pos_all = []
     for idx in range(6):
-        top5 = get_top_n(pos_freq[idx], 5)
-        pos_top5.append([{"rank": r, "num": num, "count": count} for r, (num, count) in enumerate(top5, 1)])
+        items = []
+        max_count = pos_freq[idx][0][1] if pos_freq[idx] else 1
+        for rank, (num, count) in enumerate(pos_freq[idx], 1):
+            items.append({
+                "rank": rank,
+                "num": num,
+                "count": count,
+                "pct": (count / max_count) * 100,
+            })
+        pos_all.append(items)
 
     games_data = []
     labels = [
@@ -42,7 +50,7 @@ def load_data():
     CACHE["last_date"] = data[0]["data"]
     CACHE["last_concurso"] = data[0]["concurso"]
     CACHE["total_contests"] = len(data)
-    CACHE["pos_top5"] = pos_top5
+    CACHE["pos_all"] = pos_all
     CACHE["games"] = games_data
 
     return CACHE
@@ -58,7 +66,7 @@ def index():
         first_date=cache["first_date"],
         last_date=cache["last_date"],
         last_concurso=cache["last_concurso"],
-        pos_top5=cache["pos_top5"],
+        pos_all=cache["pos_all"],
         games=cache["games"],
         pos_names=pos_names,
     )
@@ -71,9 +79,7 @@ def refresh():
 
 
 if __name__ == "__main__":
-    import socket
-    hostname = socket.gethostname()
     print("Carregando dados da Mega-Sena...")
     load_data()
-    print(f"Servidor rodando em http://0.0.0.0:5000")
+    print("Servidor rodando em http://0.0.0.0:5000")
     app.run(host="0.0.0.0", port=5000, debug=False)

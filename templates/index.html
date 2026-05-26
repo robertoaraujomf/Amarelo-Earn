@@ -16,7 +16,7 @@
         }
 
         .container {
-            max-width: 960px;
+            max-width: 1060px;
             margin: 0 auto;
         }
 
@@ -96,76 +96,97 @@
             font-weight: 700;
         }
 
-        .positions-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 40px;
+        .pos-section {
+            margin-bottom: 30px;
         }
 
-        .pos-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 215, 0, 0.12);
-            border-radius: 12px;
-            padding: 18px;
-            transition: border-color 0.2s;
-        }
-
-        .pos-card:hover {
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .pos-card h3 {
-            color: #ffd700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-        }
-
-        .pos-card .rank-item {
+        .pos-header {
             display: flex;
             align-items: center;
-            padding: 5px 0;
-            font-size: 0.9rem;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
 
-        .pos-card .rank-item .pos {
-            width: 24px;
-            font-weight: 700;
+        .pos-header h3 {
             color: #ffd700;
-            font-size: 0.8rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        .pos-card .rank-item .num {
-            width: 30px;
+        .pos-header .top5-label {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .freq-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 4px;
+        }
+
+        .freq-cell {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 4px 2px;
+            text-align: center;
+            font-size: 0.7rem;
+            transition: transform 0.15s, border-color 0.15s;
+            cursor: default;
+            position: relative;
+        }
+
+        .freq-cell:hover {
+            transform: scale(1.2);
+            z-index: 10;
+            border-color: #ffd700;
+        }
+
+        .freq-cell .num {
             font-weight: 700;
+            font-size: 0.8rem;
             color: #fff;
         }
 
-        .pos-card .rank-item .bar-bg {
-            flex: 1;
-            height: 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 7px;
-            overflow: hidden;
-            margin: 0 8px;
+        .freq-cell .count {
+            font-size: 0.6rem;
+            color: #888;
         }
 
-        .pos-card .rank-item .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ffb300);
-            border-radius: 7px;
-            transition: width 0.5s;
+        .freq-cell.top1 {
+            background: rgba(255, 215, 0, 0.25);
+            border-color: #ffd700;
         }
+        .freq-cell.top1 .num { color: #ffd700; }
+        .freq-cell.top1 .count { color: #ffd700; }
 
-        .pos-card .rank-item .count {
-            font-size: 0.75rem;
-            color: #aaa;
-            min-width: 45px;
-            text-align: right;
+        .freq-cell.top2 {
+            background: rgba(255, 215, 0, 0.18);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+        .freq-cell.top2 .num { color: #ffd700; }
+
+        .freq-cell.top3 {
+            background: rgba(255, 215, 0, 0.12);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+        .freq-cell.top3 .num { color: #e6c200; }
+
+        .freq-cell.top4 {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.25);
+        }
+        .freq-cell.top4 .num { color: #cca800; }
+
+        .freq-cell.top5 {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.15);
+        }
+        .freq-cell.top5 .num { color: #b39100; }
+
+        .freq-cell:hover .tooltip {
+            display: block;
         }
 
         .games-section {
@@ -266,21 +287,47 @@
             cursor: pointer;
             text-decoration: none;
             transition: background 0.2s;
-            margin-top: 10px;
         }
 
         .refresh-btn:hover {
             background: rgba(255, 215, 0, 0.2);
         }
 
+        .legenda {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 16px 0 24px;
+            justify-content: center;
+        }
+
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            color: #999;
+        }
+
+        .legenda-item .box {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        @media (max-width: 900px) {
+            .freq-grid { grid-template-columns: repeat(10, 1fr); }
+        }
+
         @media (max-width: 768px) {
-            .positions-grid { grid-template-columns: repeat(2, 1fr); }
+            .freq-grid { grid-template-columns: repeat(8, 1fr); }
             .games-grid { grid-template-columns: repeat(2, 1fr); }
             .header h1 { font-size: 1.8rem; }
         }
 
         @media (max-width: 480px) {
-            .positions-grid { grid-template-columns: 1fr; }
+            .freq-grid { grid-template-columns: repeat(6, 1fr); }
             .games-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -289,7 +336,7 @@
     <div class="container">
         <div class="header">
             <h1><span>AMARELO</span> EARN</h1>
-            <p>Analisador estatístico da Mega-Sena — frequência por posição</p>
+            <p>Analisador estatístico da Mega-Sena — frequência por posição (01 a 60)</p>
         </div>
 
         <div class="stats-bar">
@@ -308,28 +355,36 @@
         </div>
 
         <div class="section-title">
-            📊 Análise por Posição
-            <span class="badge">Top 5 de cada</span>
+            📊 Frequência Completa por Posição
+            <span class="badge">60 números</span>
         </div>
 
-        <div class="positions-grid">
-            {% for idx in range(6) %}
-            <div class="pos-card">
+        <div class="legenda">
+            <div class="legenda-item"><div class="box" style="background:rgba(255,215,0,0.25);border-color:#ffd700;"></div> 1º</div>
+            <div class="legenda-item"><div class="box" style="background:rgba(255,215,0,0.18);border-color:rgba(255,215,0,0.6);"></div> 2º</div>
+            <div class="legenda-item"><div class="box" style="background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.4);"></div> 3º</div>
+            <div class="legenda-item"><div class="box" style="background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.25);"></div> 4º</div>
+            <div class="legenda-item"><div class="box" style="background:rgba(255,215,0,0.05);border-color:rgba(255,215,0,0.15);"></div> 5º</div>
+            <div class="legenda-item"><div class="box" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.06);"></div> 6º+</div>
+        </div>
+
+        {% for idx in range(6) %}
+        <div class="pos-section">
+            <div class="pos-header">
                 <h3>{{ pos_names[idx] }}</h3>
-                {% set max_count = pos_top5[idx][0]['count'] if pos_top5[idx] else 1 %}
-                {% for item in pos_top5[idx] %}
-                <div class="rank-item">
-                    <span class="pos">{{ item['rank'] }}º</span>
-                    <span class="num">{{ '%02d' % item['num'] }}</span>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: {{ (item['count'] / max_count) * 100 }}%"></div>
-                    </div>
-                    <span class="count">{{ item['count'] }}x</span>
+                <span class="top5-label">Top 5: {% for item in pos_all[idx][:5] %}{{ '%02d' % item['num'] }}{% if not loop.last %}, {% endif %}{% endfor %}</span>
+            </div>
+            <div class="freq-grid">
+                {% for item in pos_all[idx] %}
+                {% set tier = 'top' + (item['rank']|string) if item['rank'] <= 5 else '' %}
+                <div class="freq-cell {{ tier }}" title="{{ '%02d' % item['num'] }}: {{ item['count'] }}x ({{ item['rank'] }}º)">
+                    <div class="num">{{ '%02d' % item['num'] }}</div>
+                    <div class="count">{{ item['count'] }}x</div>
                 </div>
                 {% endfor %}
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
 
         <div class="section-title">
             💡 Jogos Sugeridos
