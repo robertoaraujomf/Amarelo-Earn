@@ -1,0 +1,14 @@
+[Unit]
+Description=Amarelo Earn - Mega-Sena Web Analyzer
+After=network.target
+
+[Service]
+Type=simple
+User=roberto
+WorkingDirectory=/home/roberto/Projetos/earn
+ExecStart=/tmp/amarelo_venv/bin/python /home/roberto/Projetos/earn/webapp.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
