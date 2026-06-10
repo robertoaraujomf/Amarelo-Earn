@@ -1,14 +1,12 @@
 [Unit]
-Description=Amarelo Earn - Mega-Sena Web Analyzer
+Description=Amarelo Earn - Mega-Sena Static Page Generator
 After=network.target
 
 [Service]
-Type=simple
+Type=oneshot
 User=roberto
 WorkingDirectory=/home/roberto/Projetos/earn
-ExecStart=/tmp/amarelo_venv/bin/python /home/roberto/Projetos/earn/webapp.py
-Restart=always
-RestartSec=10
+ExecStart=/tmp/amarelo_venv/bin/python /home/roberto/Projetos/earn/generate.py
 
 [Install]
 WantedBy=multi-user.target
